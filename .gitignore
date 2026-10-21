@@ -1,0 +1,12 @@
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependências e arquivos gerados (caso o projeto evolua)
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
