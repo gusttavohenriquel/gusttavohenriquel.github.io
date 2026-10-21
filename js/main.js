@@ -25,42 +25,51 @@
       copyButton.textContent = 'Copiado ✓';
     } catch (_) { document.getElementById('copy-feedback').textContent = 'Não foi possível copiar automaticamente. Selecione o e-mail exibido acima.'; }
   });
-  /* Galeria MarkCar: seleção, navegação e ampliação */
-  const markcarThumbs = [...document.querySelectorAll('[data-markcar-slide]')];
-  const markcarImage = document.getElementById('markcar-gallery-image');
-  const markcarLightbox = document.getElementById('markcar-lightbox');
-  const zoomImage = document.getElementById('markcar-lightbox-image');
-  let currentMarkcarSlide = 0;
-  function showMarkcarSlide(index) {
-    if (!markcarThumbs.length) return;
-    currentMarkcarSlide = (index + markcarThumbs.length) % markcarThumbs.length;
-    const selected = markcarThumbs[currentMarkcarSlide];
-    const title = selected.dataset.title;
-    const src = selected.dataset.src;
-    markcarImage.src = src;
-    markcarImage.alt = title + ' no Sistema MarkCar';
-    document.getElementById('markcar-gallery-title').textContent = title;
-    document.getElementById('markcar-gallery-description').textContent = selected.dataset.description;
-    document.getElementById('markcar-gallery-counter').textContent = `${String(currentMarkcarSlide + 1).padStart(2, '0')} / ${String(markcarThumbs.length).padStart(2, '0')}`;
-    markcarThumbs.forEach((thumb, position) => {
-      const active = position === currentMarkcarSlide;
-      thumb.classList.toggle('is-current', active);
-      thumb.setAttribute('aria-pressed', String(active));
+  /* Galerias dos estudos de caso: seleção, navegação e ampliação. */
+  function initProjectGallery(slug, projectName) {
+    const thumbs = [...document.querySelectorAll(`[data-${slug}-slide]`)];
+    if (!thumbs.length) return;
+    const image = document.getElementById(`${slug}-gallery-image`);
+    const lightbox = document.getElementById(`${slug}-lightbox`);
+    const zoomImage = document.getElementById(`${slug}-lightbox-image`);
+    let current = 0;
+    function showSlide(index) {
+      current = (index + thumbs.length) % thumbs.length;
+      const selected = thumbs[current];
+      const { title, src, description, width, height } = selected.dataset;
+      image.src = src;
+      image.alt = `${title} no ${projectName}`;
+      image.classList.toggle('is-portrait', selected.dataset.orientation === 'portrait');
+      if (width && height) { image.width = Number(width); image.height = Number(height); }
+      document.getElementById(`${slug}-gallery-title`).textContent = title;
+      document.getElementById(`${slug}-gallery-description`).textContent = description;
+      document.getElementById(`${slug}-gallery-counter`).textContent = `${String(current + 1).padStart(2, '0')} / ${String(thumbs.length).padStart(2, '0')}`;
+      thumbs.forEach((thumb, position) => {
+        const active = position === current;
+        thumb.classList.toggle('is-current', active);
+        thumb.setAttribute('aria-pressed', String(active));
+      });
+      zoomImage.src = src;
+      zoomImage.alt = `${title} ampliado no ${projectName}`;
+      if (width && height) { zoomImage.width = Number(width); zoomImage.height = Number(height); }
+      document.getElementById(`${slug}-lightbox-title`).textContent = title;
+      document.getElementById(`${slug}-original-link`).href = src;
+    }
+    thumbs.forEach((thumb, index) => thumb.addEventListener('click', () => showSlide(index)));
+    document.getElementById(`${slug}-prev`).addEventListener('click', () => showSlide(current - 1));
+    document.getElementById(`${slug}-next`).addEventListener('click', () => showSlide(current + 1));
+    document.getElementById(`${slug}-zoom`).addEventListener('click', () => lightbox.showModal());
+    document.getElementById(`${slug}-lightbox-prev`).addEventListener('click', () => showSlide(current - 1));
+    document.getElementById(`${slug}-lightbox-next`).addEventListener('click', () => showSlide(current + 1));
+    document.addEventListener('keydown', event => {
+      if (!lightbox.open) return;
+      if (event.key === 'ArrowRight') { event.preventDefault(); showSlide(current + 1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); showSlide(current - 1); }
     });
-    zoomImage.src = src;
-    zoomImage.alt = title + ' ampliado no Sistema MarkCar';
-    document.getElementById('markcar-lightbox-title').textContent = title;
-    document.getElementById('markcar-original-link').href = src;
+    showSlide(0);
   }
-  markcarThumbs.forEach((thumb, index) => thumb.addEventListener('click', () => showMarkcarSlide(index)));
-  document.getElementById('markcar-prev').addEventListener('click', () => showMarkcarSlide(currentMarkcarSlide - 1));
-  document.getElementById('markcar-next').addEventListener('click', () => showMarkcarSlide(currentMarkcarSlide + 1));
-  document.getElementById('markcar-zoom').addEventListener('click', () => markcarLightbox.showModal());
-  document.getElementById('markcar-lightbox-prev').addEventListener('click', () => showMarkcarSlide(currentMarkcarSlide - 1));
-  document.getElementById('markcar-lightbox-next').addEventListener('click', () => showMarkcarSlide(currentMarkcarSlide + 1));
-  document.addEventListener('keydown', event => {
-    if (!markcarLightbox.open) return;
-    if (event.key === 'ArrowRight') { event.preventDefault(); showMarkcarSlide(currentMarkcarSlide + 1); }
-    if (event.key === 'ArrowLeft') { event.preventDefault(); showMarkcarSlide(currentMarkcarSlide - 1); }
-  });
+  initProjectGallery('markcar', 'Sistema MarkCar');
+  initProjectGallery('unica', 'protótipo da loja ÚNICA.');
+  initProjectGallery('barber', 'Plataforma de Barbearias');
+  initProjectGallery('racha', 'Racha Franca');
 })();

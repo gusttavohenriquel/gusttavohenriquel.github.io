@@ -227,3 +227,50 @@ footer a:hover{color:var(--accent)}
 .lightbox-bottom button{background:#1c2533;color:#fff;border-color:#475162}
 .lightbox-bottom a{font-size:.85rem;color:#d7ebe9;text-decoration:underline;text-underline-offset:4px;text-align:center}
 @media(max-width:680px){.gallery-thumbs{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-thumb img{height:70px}.gallery-nav>span{display:none}.cover-photo-caption{display:grid;gap:2px}.cover-photo-caption span{font-size:.6rem}.gallery-zoom-hint{font-size:.68rem}}
+
+/* ÚNICA.: capa real e galeria responsiva */
+.cover-unica-image{padding:0;background:#24221f}
+.cover-unica-image::before,.cover-unica-image::after{display:none}
+.cover-unica-image>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 25%}
+.cover-unica-image::after{content:"";display:block;position:absolute;inset:38% 0 0;background:linear-gradient(transparent,rgba(14,12,12,.9));z-index:0;border:0;border-radius:0;opacity:1;pointer-events:none}
+.unica-dialog{width:min(1020px,calc(100vw - 28px));max-height:92dvh}
+.unica-dialog .gallery-stage-open{background:var(--bg)}
+.unica-dialog .gallery-stage-open img{max-height:520px;object-fit:contain;object-position:center}
+.unica-dialog .gallery-stage-open img.is-portrait{width:100%;height:520px;object-fit:contain}
+.unica-dialog .gallery-thumb[data-orientation="portrait"] img{object-fit:contain;background:var(--bg)}
+@media(max-width:680px){.unica-dialog .gallery-stage-open img.is-portrait{height:min(65dvh,520px)}}
+
+/* Plataforma de Barbearias: card e galeria de capturas reais */
+.cover-barber-image{padding:0;justify-content:flex-start;background:linear-gradient(115deg,#131414 0%,#1c1b18 58%,#2c2513 100%);color:#fff}
+.cover-barber-image::before,.cover-barber-image::after{display:none}
+.barber-cover-copy{position:relative;z-index:2;display:grid;gap:5px;max-width:65%;padding:24px 22px;text-align:left}
+.barber-cover-copy span{font:600 .68rem var(--mono);letter-spacing:.09em;color:#eac665}
+.barber-cover-copy strong{font:700 clamp(1.45rem,3vw,2.15rem)/1.05 var(--sans);letter-spacing:-.04em;color:#fff}
+.barber-cover-copy small{font:400 .82rem/1.45 var(--sans);color:#e4ded0}
+.barber-cover-screen{position:absolute;z-index:1;right:10px;top:18px;width:43%;height:220px;overflow:hidden;border:1px solid rgba(234,198,101,.45);border-radius:11px;background:#181818;box-shadow:0 8px 34px rgba(0,0,0,.5);transform:rotate(5deg)}
+.barber-cover-screen img{width:100%;height:auto;display:block}
+.barber-dialog{width:min(920px,calc(100vw - 28px));max-height:92dvh}
+.barber-dialog .gallery-stage-open{display:grid;place-items:center;background:#151515}
+.barber-dialog .gallery-stage-open img.is-portrait{display:block;width:auto;max-width:100%;height:min(57dvh,570px);max-height:570px;object-fit:contain;object-position:center top}
+.barber-dialog .gallery-thumb img{object-fit:cover;object-position:top;background:#191919}
+@media(max-width:680px){.barber-cover-copy{padding:16px;max-width:69%}.barber-cover-copy strong{font-size:1.55rem}.barber-cover-screen{right:-4px;width:44%}.barber-dialog .gallery-stage-open img.is-portrait{height:min(52dvh,480px)}}
+
+
+/* Racha Franca: mockups de celular no card e galeria mobile */
+.cover-racha-image{padding:0;justify-content:flex-start;background:radial-gradient(circle at 82% 19%,#174165 0%,#07182d 48%,#07101e 100%);color:white}
+.cover-racha-image::before{width:290px;height:290px;border-radius:50%;border:1px solid rgba(255,112,30,.25);opacity:1;top:-145px;right:-60px;z-index:0}
+.cover-racha-image::after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;border:1px solid rgba(255,112,30,.13);left:-70px;bottom:-170px;opacity:1;z-index:0}
+.racha-cover-copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:8px;padding:20px 15px 20px 22px;width:64%;text-align:left;pointer-events:none}
+.racha-cover-copy span{font:600 .64rem var(--mono);letter-spacing:.04em;color:#ff8c42}
+.racha-cover-copy strong{font:800 1.85rem/.95 var(--sans);color:#fff;letter-spacing:-.05em}
+.racha-cover-copy small{max-width:180px;font:500 .71rem/1.35 var(--sans);color:#d5deea}
+.racha-cover-phones{position:absolute;right:0;top:0;width:47%;height:100%;pointer-events:none;z-index:2}
+.racha-phone{position:absolute;width:88px;height:176px;overflow:hidden;border:3px solid #101725;border-radius:13px;background:#071322;box-shadow:0 9px 23px rgba(0,0,0,.45)}
+.racha-phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.racha-phone-back{right:5px;top:-24px;transform:rotate(11deg);opacity:.83}
+.racha-phone-front{right:65px;top:24px;transform:rotate(-9deg)}
+.racha-dialog{width:min(920px,calc(100vw - 28px));max-height:92dvh}
+.racha-dialog .gallery-stage-open{display:grid;place-items:center;background:#06101e}
+.racha-dialog .gallery-stage-open img.is-portrait{display:block;width:auto;max-width:100%;height:min(58dvh,590px);max-height:590px;object-fit:contain;object-position:center top}
+.racha-dialog .gallery-thumb img{object-fit:cover;object-position:top;background:#071322}
+@media(max-width:680px){.racha-cover-copy{padding:18px;width:64%}.racha-cover-copy strong{font-size:1.65rem}.racha-phone{width:81px;height:160px}.racha-phone-back{right:-5px}.racha-phone-front{right:54px;top:23px}.racha-dialog .gallery-stage-open img.is-portrait{height:min(52dvh,520px)}}
