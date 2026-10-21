@@ -5,12 +5,12 @@
   const night = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></svg>';
   const sun = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
   let storedTheme = null;
-  try { storedTheme = localStorage.getItem('gh-portfolio-theme'); } catch (_) {}
+  try { storedTheme = localStorage.getItem('gh-portfolio-theme'); } catch (_) { }
   if (storedTheme === 'dark' || storedTheme === 'light') root.dataset.theme = storedTheme;
   const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   const updateThemeLabel = () => { const dark = isDark(); toggle.innerHTML = dark ? sun : night; toggle.setAttribute('aria-label', dark ? 'Ativar tema claro' : 'Ativar tema escuro'); toggle.title = dark ? 'Ativar tema claro' : 'Ativar tema escuro'; };
   updateThemeLabel();
-  toggle.addEventListener('click', () => { root.dataset.theme = isDark() ? 'light' : 'dark'; try { localStorage.setItem('gh-portfolio-theme', root.dataset.theme); } catch (_) {} updateThemeLabel(); });
+  toggle.addEventListener('click', () => { root.dataset.theme = isDark() ? 'light' : 'dark'; try { localStorage.setItem('gh-portfolio-theme', root.dataset.theme); } catch (_) { } updateThemeLabel(); });
   if (window.matchMedia) { const mq = matchMedia('(prefers-color-scheme: dark)'); if (mq.addEventListener) mq.addEventListener('change', updateThemeLabel); }
   document.querySelectorAll('[data-open-dialog]').forEach(button => button.addEventListener('click', () => { const dialog = document.getElementById(button.dataset.openDialog); if (dialog && typeof dialog.showModal === 'function') dialog.showModal(); }));
   document.querySelectorAll('[data-close-dialog]').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
